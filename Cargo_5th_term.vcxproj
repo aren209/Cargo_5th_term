@@ -123,11 +123,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Aircraft.cpp" />
+    <ClCompile Include="Airport.cpp" />
     <ClCompile Include="Cargo.cpp" />
+    <ClCompile Include="Flight.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Passenger.cpp" />
+    <ClCompile Include="Schedule.cpp" />
     <ClCompile Include="test_cargo.cpp" />
+    <ClCompile Include="test_hierarchy.cpp" />
+    <ClCompile Include="UrgentCargo.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Aircraft.h" />
+    <ClInclude Include="Airport.h" />
     <ClInclude Include="Cargo.h" />
+    <ClInclude Include="Flight.h" />
+    <ClInclude Include="Passenger.h" />
+    <ClInclude Include="Schedule.h" />
+    <ClInclude Include="UrgentCargo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
