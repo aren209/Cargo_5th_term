@@ -239,7 +239,7 @@ void demonstrateCargo() {
     std::cout << "Груз 200 валиден: " << (cargo3.isValid() ? "да" : "нет") << std::endl;
 }
 
-int main() {
+int testCargoMain() {
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
     std::setlocale(LC_ALL, "ru_RU.UTF-8");

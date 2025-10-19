@@ -51,9 +51,9 @@ public:
 
     bool hasReachedDestination() const;
 
-    std::string toString() const;
+    virtual std::string toString() const;
 
-    bool isValid() const;
+    virtual bool isValid() const;
 };
 
 #endif // CARGO_H
