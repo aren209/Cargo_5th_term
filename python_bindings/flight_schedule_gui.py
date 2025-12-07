@@ -438,10 +438,24 @@ class FlightScheduleGUI:
         """Добавить новый самолёт"""
         try:
             number = self.aircraft_number_entry.get().strip()
-            max_payload = float(self.aircraft_max_payload_entry.get())
             
             if not number:
                 messagebox.showerror("Ошибка", "Введите номер самолёта!")
+                return
+            
+            try:
+                max_payload = float(self.aircraft_max_payload_entry.get())
+            except ValueError:
+                messagebox.showerror("Ошибка", "Неверное значение грузоподъёмности! Введите число.")
+                return
+            
+            # Проверяем грузоподъёмность перед созданием самолёта
+            if max_payload <= 0:
+                messagebox.showerror(
+                    "Ошибка", 
+                    f"Грузоподъёмность самолёта должна быть положительным числом.\n"
+                    f"Получено значение: {max_payload} кг"
+                )
                 return
             
             aircraft = Aircraft(number, max_payload)
@@ -452,10 +466,21 @@ class FlightScheduleGUI:
             self.aircraft_max_payload_entry.delete(0, tk.END)
             
             messagebox.showinfo("Успех", "Самолёт добавлен!")
-        except ValueError:
-            messagebox.showerror("Ошибка", "Неверное значение грузоподъёмности!")
+        except ValueError as e:
+            # Обрабатываем ValueError из класса Aircraft (с информативным сообщением)
+            messagebox.showerror("Ошибка", str(e))
         except Exception as e:
-            messagebox.showerror("Ошибка", f"Не удалось добавить самолёт: {e}")
+            # Обрабатываем другие исключения
+            error_msg = str(e)
+            if "Failed to create Aircraft" in error_msg:
+                messagebox.showerror(
+                    "Ошибка", 
+                    "Не удалось создать самолёт. Возможные причины:\n"
+                    "- Некорректные параметры самолёта\n"
+                    "- Ошибка в библиотеке"
+                )
+            else:
+                messagebox.showerror("Ошибка", f"Не удалось добавить самолёт: {error_msg}")
     
     def add_airport(self):
         """Добавить новый аэропорт"""

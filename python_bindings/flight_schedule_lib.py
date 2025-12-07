@@ -471,9 +471,20 @@ class Aircraft:
     """Python класс для работы с самолётом"""
     
     def __init__(self, number: str, max_payload: float):
+        # Проверяем корректность грузоподъёмности перед вызовом C API
+        if max_payload <= 0:
+            raise ValueError(
+                f"Грузоподъёмность самолёта должна быть положительным числом. "
+                f"Получено значение: {max_payload} кг"
+            )
+        
         self._handle = _lib.Aircraft_Create(_to_bytes(number), c_double(max_payload))
         if not self._handle:
-            raise RuntimeError("Failed to create Aircraft")
+            raise RuntimeError(
+                "Не удалось создать самолёт. Возможные причины:\n"
+                "- Некорректные параметры самолёта\n"
+                "- Ошибка в библиотеке"
+            )
     
     def __del__(self):
         if hasattr(self, '_handle') and self._handle:
