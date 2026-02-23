@@ -1,9 +1,13 @@
+//! \file UrgentCargo.h
+//! \brief Срочный груз: наследник Cargo с дедлайном доставки.
+
 #ifndef URGENT_CARGO_H
 #define URGENT_CARGO_H
 
 #include "Cargo.h"
 #include <ctime>
 
+//! Срочный груз: крайний срок доставки; методы isOverdue(), isUrgent(), getDaysUntilDeadline().
 class UrgentCargo : public Cargo {
 private:
     std::time_t deadline;  ///< Крайняя дата доставки до аэропорта назначения

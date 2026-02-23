@@ -44,10 +44,20 @@
 
 ## Документация
 
-- [QUICK_START.md](QUICK_START.md) - Быстрый старт и основные инструкции
-- [PYTHON_GUI_README.md](PYTHON_GUI_README.md) - Подробное руководство по Python GUI
-- [Программа_Авиаперевозки_Документация.md](Программа_Авиаперевозки_Документация.md) - Документация по C++ классам
-- [PYTHON_GUI_IMPLEMENTATION.md](PYTHON_GUI_IMPLEMENTATION.md) - Описание реализации Python части
+**Работа 1 (документирование):**
+
+- [docs/ОПИСАНИЕ_ПРОГРАММЫ.md](docs/ОПИСАНИЕ_ПРОГРАММЫ.md) — **описание системы** (5–10 стр.): обзор, структура, функциональность, схемы, C++ и Python.
+- **Документация по коду C++**: в каталоге проекта выполните `doxygen Doxyfile` — HTML будет в `docs/cpp/html/` (требуется [Doxygen](https://www.doxygen.nl/)).
+- **Документация по коду Python**: в модулях используются docstrings (PEP 257 / Sphinx); для просмотра: `python -m pydoc python_bindings.flight_schedule_lib`.
+
+**Сборка и использование:**
+
+- [QUICK_START.md](QUICK_START.md) — быстрый старт и сборка DLL
+- [PYTHON_GUI_README.md](PYTHON_GUI_README.md) — руководство по Python GUI
+- [docs/УСТРАНЕНИЕ_ПРОБЛЕМ.md](docs/УСТРАНЕНИЕ_ПРОБЛЕМ.md) — решение проблем с DLL (x64, WinError 193 и др.)
+- [docs/РЕАЛИЗАЦИЯ_PYTHON_GUI.md](docs/РЕАЛИЗАЦИЯ_PYTHON_GUI.md) — описание реализации Python-части
+
+Краткое описание классов C++ см. также в [Программа_Авиаперевозки_Документация.md](Программа_Авиаперевозки_Документация.md).
 
 ## Архитектура
 

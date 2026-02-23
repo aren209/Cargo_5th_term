@@ -1,10 +1,14 @@
-#ifndef CARGO_H   ///защита от двойного включения
-#define CARGO_H   ///защита от двойного включения
+//! \file Cargo.h
+//! \brief Базовый класс груза в системе авиаперевозок
+
+#ifndef CARGO_H
+#define CARGO_H
 
 #include <string>
 #include <ctime>
 
 
+//! Базовый класс для представления груза (номер, масса, аэропорты, время прибытия).
 class Cargo {
 private:
     std::string cargoNumber;        ///< Номер груза

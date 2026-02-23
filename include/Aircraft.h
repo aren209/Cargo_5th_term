@@ -1,3 +1,6 @@
+//! \file Aircraft.h
+//! \brief Класс самолёта: грузоподъёмность, списки грузов и пассажиров.
+
 #ifndef AIRCRAFT_H
 #define AIRCRAFT_H
 
@@ -9,6 +12,7 @@
 #include "Passenger.h"
 
 
+//! Самолёт: номер, максимальная грузоподъёмность, списки грузов (обычных и срочных) и пассажиров.
 class Aircraft {
 private:
     std::string aircraftNumber;                          ///< Номер самолёта

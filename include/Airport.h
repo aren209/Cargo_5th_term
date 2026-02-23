@@ -1,3 +1,6 @@
+//! \file Airport.h
+//! \brief Класс аэропорта: название, списки грузов, пассажиров и самолётов.
+
 #ifndef AIRPORT_H
 #define AIRPORT_H
 
@@ -11,6 +14,7 @@
 // Предварительное объявление класса Aircraft
 class Aircraft;
 
+//! Аэропорт: название и контейнеры грузов, пассажиров и самолётов.
 class Airport {
 private:
     std::string name;                                    ///< Название аэропорта

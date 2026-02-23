@@ -1,6 +1,11 @@
 """
 Графический интерфейс для системы управления расписанием авиаперевозок.
-Использует библиотеку flight_schedule_lib для взаимодействия с C++ DLL.
+
+Использует модуль flight_schedule_lib для вызова C++ DLL. Обеспечивает вкладки:
+Расписание, Рейсы, Самолёты, Аэропорты, Грузы, Пассажиры, Отчёты.
+При запуске загружаются тестовые данные.
+
+:requires: flight_schedule_lib (и собранная FlightScheduleAPI.dll)
 """
 
 import tkinter as tk
@@ -23,8 +28,8 @@ except ImportError as e:
 
 
 class FlightScheduleGUI:
-    """Главное окно приложения"""
-    
+    """Главное окно приложения: вкладки и работа с расписанием через Schedule."""
+
     def __init__(self, root):
         self.root = root
         self.root.title("Система управления расписанием авиаперевозок")
@@ -44,7 +49,7 @@ class FlightScheduleGUI:
         self.load_sample_data()
     
     def create_widgets(self):
-        """Создание элементов интерфейса"""
+        """Создание меню, панели вкладок и содержимого каждой вкладки."""
         
         # Создаём меню
         menubar = tk.Menu(self.root)

@@ -1,6 +1,11 @@
 """
-Python bindings for Flight Schedule C++ library using ctypes.
-Provides a Python interface to the C++ flight schedule system.
+Привязки Python к библиотеке расписания авиаперевозок (C++) через ctypes.
+
+Данный модуль загружает FlightScheduleAPI.dll и предоставляет классы-обёртки
+для работы с расписанием, рейсами, самолётами, аэропортами, грузами и пассажирами.
+Требуется 64-bit Python при использовании 64-bit DLL.
+
+:note: Перед использованием необходимо собрать C++ DLL (см. build_dll.bat).
 """
 
 import ctypes
@@ -17,7 +22,13 @@ else:
     DLL_NAME = 'libFlightScheduleAPI.so'
 
 def check_dll_architecture(dll_path):
-    """Проверяет архитектуру DLL (x86 или x64)"""
+    """Проверяет архитектуру DLL (x86 или x64).
+
+    :param dll_path: путь к файлу DLL
+    :type dll_path: str
+    :return: 'x64', 'x86' или 'unknown'
+    :rtype: str
+    """
     try:
         with open(dll_path, 'rb') as f:
             f.seek(0x3C)  # PE header offset
@@ -296,7 +307,14 @@ _lib.Passenger_ToString.argtypes = [Handle, ctypes.POINTER(ctypes.c_char), c_int
 
 
 def _get_string(func, handle, *args):
-    """Вспомогательная функция для получения строк из DLL"""
+    """Вспомогательная функция для получения строк из DLL.
+
+    :param func: C-функция вида func(handle, ..., buffer, bufferSize)
+    :param handle: указатель на объект C++
+    :param args: дополнительные аргументы перед buffer и bufferSize
+    :return: декодированная строка UTF-8
+    :rtype: str
+    """
     buffer = ctypes.create_string_buffer(BUFFER_SIZE)
     func(handle, *args, buffer, BUFFER_SIZE)
     result = buffer.value.decode('utf-8', errors='ignore')
@@ -304,17 +322,34 @@ def _get_string(func, handle, *args):
 
 
 def _to_bytes(s: str) -> bytes:
-    """Преобразует строку в bytes для передачи в C API"""
+    """Преобразует строку в bytes для передачи в C API.
+
+    :param s: строка (или уже bytes)
+    :return: байты в UTF-8
+    :rtype: bytes
+    """
     return s.encode('utf-8') if isinstance(s, str) else s
 
 
 def datetime_to_timestamp(dt: datetime) -> int:
-    """Преобразует datetime в Unix timestamp"""
+    """Преобразует datetime в Unix timestamp.
+
+    :param dt: дата и время
+    :type dt: datetime.datetime
+    :return: количество секунд с эпохи
+    :rtype: int
+    """
     return int(dt.timestamp())
 
 
 def timestamp_to_datetime(ts: int) -> datetime:
-    """Преобразует Unix timestamp в datetime"""
+    """Преобразует Unix timestamp в datetime.
+
+    :param ts: количество секунд с эпохи
+    :type ts: int
+    :return: дата и время
+    :rtype: datetime.datetime
+    """
     return datetime.fromtimestamp(ts)
 
 
@@ -323,8 +358,11 @@ def timestamp_to_datetime(ts: int) -> datetime:
 # ============================================
 
 class Schedule:
-    """Python класс для работы с расписанием рейсов"""
-    
+    """Обёртка над C++ Schedule: контейнер рейсов, валидация, отчёты.
+
+    Создаёт объект расписания в DLL. Рейсы добавляются через add_flight().
+    """
+
     def __init__(self):
         self._handle = _lib.Schedule_Create()
         if not self._handle:
@@ -335,15 +373,30 @@ class Schedule:
             _lib.Schedule_Destroy(self._handle)
     
     def add_flight(self, flight: 'Flight') -> bool:
-        """Добавить рейс в расписание"""
+        """Добавить рейс в расписание.
+
+        :param flight: объект рейса (Flight)
+        :return: True при успехе
+        :rtype: bool
+        """
         return _lib.Schedule_AddFlight(self._handle, flight._handle) != 0
-    
+
     def remove_flight(self, flight_number: str) -> bool:
-        """Удалить рейс из расписания"""
+        """Удалить рейс из расписания по номеру.
+
+        :param flight_number: номер рейса
+        :return: True при успехе
+        :rtype: bool
+        """
         return _lib.Schedule_RemoveFlight(self._handle, _to_bytes(flight_number)) != 0
-    
+
     def find_flight(self, flight_number: str) -> Optional['Flight']:
-        """Найти рейс по номеру"""
+        """Найти рейс по номеру.
+
+        :param flight_number: номер рейса
+        :return: Flight или None
+        :rtype: Optional[Flight]
+        """
         handle = _lib.Schedule_FindFlight(self._handle, _to_bytes(flight_number))
         if handle:
             return Flight._from_handle(handle)

@@ -1,0 +1,33 @@
+# Doxyfile для системы управления расписанием авиаперевозок (C++)
+# Генерация: doxygen Doxyfile
+
+PROJECT_NAME          = "Система авиаперевозок (C++)"
+PROJECT_NUMBER        = "1.0"
+PROJECT_BRIEF         = "Документация по C++ ядру и C API"
+OUTPUT_DIRECTORY      = docs/cpp
+INPUT_ENCODING       = UTF-8
+INPUT                = include src
+FILE_PATTERNS         = *.h *.cpp
+RECURSIVE             = YES
+EXTRACT_ALL           = YES
+EXTRACT_PRIVATE       = NO
+EXTRACT_STATIC        = YES
+SOURCE_BROWSER        = YES
+INLINE_SOURCES        = NO
+REFERENCED_BY_RELATION = YES
+REFERENCES_LINK_SOURCE = YES
+GENERATE_HTML         = YES
+GENERATE_LATEX        = NO
+GENERATE_RTF          = NO
+HTML_OUTPUT           = html
+HTML_TIMESTAMP        = YES
+QUIET                 = NO
+WARNINGS              = YES
+WARN_IF_UNDOCUMENTED  = NO
+WARN_IF_DOC_ERROR     = YES
+OPTIMIZE_OUTPUT_FOR_C = NO
+HIDE_UNDOC_MEMBERS    = NO
+HIDE_UNDOC_CLASSES    = NO
+CASE_SENSE_NAMES      = YES
+JAVADOC_AUTOBRIEF     = YES
+MULTILINE_CPP_IS_BRIEF = NO

@@ -1,3 +1,6 @@
+//! \file FlightScheduleException.h
+//! \brief Исключения системы расписания (FlightScheduleException, InvalidAircraftException).
+
 #ifndef FLIGHT_SCHEDULE_EXCEPTION_H
 #define FLIGHT_SCHEDULE_EXCEPTION_H
 

@@ -169,5 +169,6 @@ python test_api.py
 
 ## Дополнительная информация
 
-Подробная документация: `PYTHON_GUI_README.md`
+- Подробное руководство по GUI: [PYTHON_GUI_README.md](PYTHON_GUI_README.md)
+- Проблемы с DLL (x64, WinError 193): [docs/УСТРАНЕНИЕ_ПРОБЛЕМ.md](docs/УСТРАНЕНИЕ_ПРОБЛЕМ.md)
 

@@ -1,9 +1,13 @@
+//! \file Passenger.h
+//! \brief Класс пассажира: номер, имя, аэропорты; фиксированная масса.
+
 #ifndef PASSENGER_H
 #define PASSENGER_H
 
 #include <string>
 #include <ctime>
 
+//! Пассажир: номер, имя, аэропорты отправления/назначения; масса 80 кг.
 class Passenger {
 private:
     std::string passengerNumber;     ///< Номер пассажира

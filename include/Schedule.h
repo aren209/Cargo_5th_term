@@ -1,3 +1,6 @@
+//! \file Schedule.h
+//! \brief Расписание рейсов: контейнер, сортировка, валидация, отчёты.
+
 #ifndef SCHEDULE_H
 #define SCHEDULE_H
 
@@ -7,6 +10,7 @@
 #include <ctime>
 #include "Flight.h"
 
+//! Расписание: список рейсов, упорядоченный по времени вылета; проверка конфликтов и корректности.
 class Schedule {
 private:
     std::vector<std::shared_ptr<Flight>> flights;  ///< Список рейсов (упорядоченный по времени отправления)

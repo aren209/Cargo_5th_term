@@ -1,3 +1,6 @@
+//! \file FlightScheduleAPI.h
+//! \brief C API для экспорта классов C++ в DLL (используется Python ctypes).
+
 #ifndef FLIGHT_SCHEDULE_API_H
 #define FLIGHT_SCHEDULE_API_H
 

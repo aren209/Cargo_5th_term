@@ -1,3 +1,6 @@
+//! \file Flight.h
+//! \brief Класс рейса: маршрут, время, самолёт, статус.
+
 #ifndef FLIGHT_H
 #define FLIGHT_H
 
@@ -6,6 +9,7 @@
 #include <memory>
 #include "Aircraft.h"
 
+//! Рейс: номер, аэропорты отправления/назначения, время вылета/прилёта, ID самолёта, флаг завершения.
 class Flight {
 private:
     std::string flightNumber;           ///< Номер рейса
