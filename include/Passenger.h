@@ -7,7 +7,7 @@
 #include <string>
 #include <ctime>
 
-//! Пассажир: номер, имя, аэропорты отправления/назначения; масса 80 кг.
+//! Пассажир: строковый идентификатор, имя, аэропорты отправления/назначения; масса 80 кг.
 class Passenger {
 private:
     std::string passengerNumber;     ///< Номер пассажира
@@ -18,7 +18,22 @@ private:
 
 public:
     // Конструкторы
+    /**
+     * \brief Создать пустого пассажира.
+     *
+     * Используется в случаях, когда поля будут заданы позднее через сеттеры.
+     */
     Passenger();
+
+    /**
+     * \brief Создать пассажира с заданными параметрами.
+     *
+     * \param number Строковый идентификатор пассажира (например, "P-001");
+     *               значение не обязано быть числом, допускаются буквы и другие символы.
+     * \param passengerName Имя пассажира.
+     * \param departure Аэропорт отправления.
+     * \param destination Аэропорт назначения.
+     */
     Passenger(const std::string& number, const std::string& passengerName,
               const std::string& departure, const std::string& destination);
     Passenger(const Passenger& other);

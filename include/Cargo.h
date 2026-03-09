@@ -8,10 +8,10 @@
 #include <ctime>
 
 
-//! Базовый класс для представления груза (номер, масса, аэропорты, время прибытия).
+//! Базовый класс для представления груза (идентификатор, масса, аэропорты, время прибытия).
 class Cargo {
 private:
-    std::string cargoNumber;        ///< Номер груза
+    std::string cargoNumber;        ///< Строковый идентификатор груза (например, "C-001"; не обязательно число)
     double mass;                    ///< Масса груза в килограммах
     std::string departureAirport;   ///< Аэропорт отправления
     std::string destinationAirport; ///< Аэропорт назначения
@@ -19,7 +19,24 @@ private:
     std::time_t arrivalTime;        ///< Время прибытия в аэропорт отправления
 
 public:
-    Cargo();    ///конструктор по умолчанию
+    /**
+     * \brief Создать пустой объект груза.
+     *
+     * Используется в ситуациях, когда поля будут заполнены позднее сеттерами.
+     */
+    Cargo();
+
+    /**
+     * \brief Создать груз с заданными параметрами.
+     *
+     * \param number Строковый идентификатор груза (например, "C-001");
+     *               значение не обязано быть числом, допускаются буквы и другие символы.
+     * \param cargoMass Масса груза в килограммах.
+     * \param departure Аэропорт отправления.
+     * \param destination Аэропорт назначения.
+     * \param current Текущее местоположение груза.
+     * \param arrival Время прибытия груза в аэропорт назначения (std::time_t, Unix time).
+     */
     Cargo(const std::string& number, double cargoMass, 
           const std::string& departure, const std::string& destination,
           const std::string& current, std::time_t arrival);

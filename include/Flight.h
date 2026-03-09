@@ -9,7 +9,7 @@
 #include <memory>
 #include "Aircraft.h"
 
-//! Рейс: номер, аэропорты отправления/назначения, время вылета/прилёта, ID самолёта, флаг завершения.
+//! Рейс: строковый номер, аэропорты отправления/назначения, время вылета/прилёта, ID самолёта, флаг завершения.
 class Flight {
 private:
     std::string flightNumber;           ///< Номер рейса
@@ -22,7 +22,24 @@ private:
 
 public:
     // Конструкторы
+    /**
+     * \brief Создать пустой объект рейса.
+     *
+     * Используется, когда параметры рейса будут установлены позднее.
+     */
     Flight();
+
+    /**
+     * \brief Создать рейс с заданными параметрами.
+     *
+     * \param number Строковый идентификатор рейса (например, "FL-001");
+     *               значение не обязано быть числом, допускаются буквы и другие символы.
+     * \param departure Аэропорт отправления.
+     * \param destination Аэропорт назначения.
+     * \param depTime Время вылета (std::time_t, Unix time).
+     * \param arrTime Время прибытия (std::time_t, Unix time).
+     * \param aircraft Идентификатор самолёта (должен совпадать с номером существующего Aircraft).
+     */
     Flight(const std::string& number, const std::string& departure, 
            const std::string& destination, std::time_t depTime, 
            std::time_t arrTime, const std::string& aircraft);
