@@ -26,6 +26,12 @@ except ImportError as e:
                                    "Убедитесь, что DLL скомпилирована и находится в нужной директории.")
     sys.exit(1)
 
+try:
+    from prolog_flights import PrologFlightsSolver, parse_matrix
+except Exception:
+    PrologFlightsSolver = None  # type: ignore
+    parse_matrix = None  # type: ignore
+
 
 class FlightScheduleGUI:
     """Главное окно приложения: вкладки и работа с расписанием через Schedule."""
@@ -83,6 +89,9 @@ class FlightScheduleGUI:
         
         # Вкладка отчётов
         self.create_reports_tab(notebook)
+
+        # ЛР5: задача коммивояжёра (Prolog)
+        self.create_prolog_lab5_tab(notebook)
     
     def create_schedule_tab(self, notebook):
         """Вкладка с общим расписанием"""
@@ -311,6 +320,81 @@ class FlightScheduleGUI:
         # Область вывода отчётов
         self.reports_text = scrolledtext.ScrolledText(frame, wrap=tk.WORD, font=("Consolas", 10))
         self.reports_text.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+
+    def create_prolog_lab5_tab(self, notebook):
+        """ЛР5: вызов Prolog-решателя из Python (условия задаются в GUI)."""
+        frame = ttk.Frame(notebook)
+        notebook.add(frame, text="ЛР5: Коммивояжёр (Prolog)")
+
+        top = ttk.Frame(frame)
+        top.pack(fill=tk.X, padx=5, pady=5)
+
+        info = (
+            "Задача коммивояжёра.\n"
+            "Матрица задаётся в Python/GUI, решение находится в Prolog (через janus_swi).\n"
+            "Формат: N строк, в каждой N чисел (разделители: пробел/запятая/;), N ≤ 10."
+        )
+        ttk.Label(top, text=info, justify=tk.LEFT).pack(side=tk.LEFT, padx=5)
+
+        btns = ttk.Frame(top)
+        btns.pack(side=tk.RIGHT)
+        ttk.Button(btns, text="Пример", command=self._lab5_fill_example).pack(side=tk.RIGHT, padx=2)
+        ttk.Button(btns, text="Решить", command=self._lab5_solve).pack(side=tk.RIGHT, padx=2)
+
+        mid = ttk.Frame(frame)
+        mid.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+
+        left = ttk.Frame(mid)
+        left.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        ttk.Label(left, text="Матрица расстояний").pack(anchor=tk.W)
+        self.lab5_matrix_text = scrolledtext.ScrolledText(left, wrap=tk.WORD, height=18, font=("Consolas", 10))
+        self.lab5_matrix_text.pack(fill=tk.BOTH, expand=True, pady=(2, 0))
+
+        right = ttk.Frame(mid)
+        right.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=(10, 0))
+        ttk.Label(right, text="Результат").pack(anchor=tk.W)
+        self.lab5_result_text = scrolledtext.ScrolledText(right, wrap=tk.WORD, height=18, font=("Consolas", 10))
+        self.lab5_result_text.pack(fill=tk.BOTH, expand=True, pady=(2, 0))
+
+        self._lab5_fill_example()
+
+    def _lab5_fill_example(self):
+        # Пример 4x4 (для демонстрации).
+        example = "\n".join(
+            [
+                "0  10 15 20",
+                "10 0  35 25",
+                "15 35 0  30",
+                "20 25 30 0",
+            ]
+        )
+        self.lab5_matrix_text.delete(1.0, tk.END)
+        self.lab5_matrix_text.insert(1.0, example)
+        self.lab5_result_text.delete(1.0, tk.END)
+        self.lab5_result_text.insert(1.0, "Нажмите «Решить», чтобы выполнить поиск в Prolog.\n")
+
+    def _lab5_solve(self):
+        if PrologFlightsSolver is None or parse_matrix is None:
+            messagebox.showerror(
+                "Prolog недоступен",
+                "Не удалось импортировать модуль prolog_flights.py.\n"
+                "Проверьте, что он находится в python_bindings/.",
+            )
+            return
+
+        try:
+            matrix = parse_matrix(self.lab5_matrix_text.get(1.0, tk.END))
+            solver = PrologFlightsSolver()
+            result = solver.solve(matrix)
+
+            self.lab5_result_text.delete(1.0, tk.END)
+            self.lab5_result_text.insert(
+                1.0,
+                f"Лучший путь (индексы городов): {result.path}\n"
+                f"Длина: {result.dist}\n",
+            )
+        except Exception as e:
+            messagebox.showerror("Ошибка", str(e))
     
     # Методы для работы с данными
     
